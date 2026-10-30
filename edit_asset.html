@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Asset</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="add-asset-page">
+
+
+<div class="add-asset-container">
+
+
+    <!-- HEADER -->
+
+    <header class="add-asset-header">
+
+        <div>
+
+            <h1>Edit Asset</h1>
+
+            <p>
+                Update the registered IT asset information.
+            </p>
+
+        </div>
+
+
+        <div class="add-header-actions">
+
+            <a href="{{ url_for('dashboard') }}"
+               class="header-button">
+
+                Dashboard
+
+            </a>
+
+
+            <a href="{{ url_for('view_assets') }}"
+               class="header-button">
+
+                View Data
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- CONTENT -->
+
+    <main class="add-asset-content">
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="alert {{ category }}">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <!-- FORM CARD -->
+
+        <div class="form-card">
+
+
+            <div class="form-card-header">
+
+                <div>
+
+                    <h2>Asset Information</h2>
+
+                    <p>
+                        Modify the hardware details below.
+                    </p>
+
+                </div>
+
+
+                <span class="required-note">
+
+                    * Required fields
+
+                </span>
+
+            </div>
+
+
+
+            <form method="POST">
+
+
+                <div class="form-grid">
+
+
+                    <!-- SYSTEM NO -->
+
+                    <div class="input-group">
+
+                        <label>
+                            System No <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="system_no"
+                            value="{{ asset.SystemNo or '' }}"
+                            placeholder="Enter system number"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- NAME -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            value="{{ asset.Name or '' }}"
+                            placeholder="Enter employee / user name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- MONITOR SERIAL -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Monitor Serial No
+                        </label>
+
+                        <input
+                            type="text"
+                            name="monitor_serial_no"
+                            value="{{ asset.MonitorSerialNo or '' }}"
+                            placeholder="Enter monitor serial number"
+                        >
+
+                    </div>
+
+
+
+                    <!-- TYPE -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Type
+                        </label>
+
+                        <select name="type">
+
+                            <option value="">
+                                Select asset type
+                            </option>
+
+                            <option value="Desktop"
+                                {% if asset.Type == "Desktop" %}selected{% endif %}>
+                                Desktop
+                            </option>
+
+                            <option value="Laptop"
+                                {% if asset.Type == "Laptop" %}selected{% endif %}>
+                                Laptop
+                            </option>
+
+                            <option value="Workstation"
+                                {% if asset.Type == "Workstation" %}selected{% endif %}>
+                                Workstation
+                            </option>
+
+                            <option value="Other"
+                                {% if asset.Type == "Other" %}selected{% endif %}>
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- PROCESSOR -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Processor
+                        </label>
+
+                        <input
+                            type="text"
+                            name="processor"
+                            value="{{ asset.Processor or '' }}"
+                            placeholder="e.g. Intel Core i5"
+                        >
+
+                    </div>
+
+
+
+                    <!-- RAM -->
+
+                    <div class="input-group">
+
+                        <label>
+                            RAM
+                        </label>
+
+                        <input
+                            type="text"
+                            name="ram"
+                            value="{{ asset.RAM or '' }}"
+                            placeholder="e.g. 8 GB"
+                        >
+
+                    </div>
+
+
+
+                    <!-- HARD DISK -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Hard Disk
+                        </label>
+
+                        <input
+                            type="text"
+                            name="hard_disk"
+                            value="{{ asset.HardDisk or '' }}"
+                            placeholder="e.g. 512 GB SSD"
+                        >
+
+                    </div>
+
+
+
+                    <!-- MODEL -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Model No
+                        </label>
+
+                        <input
+                            type="text"
+                            name="model_no"
+                            value="{{ asset.ModelNo or '' }}"
+                            placeholder="Enter model number"
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+
+                    <a href="{{ url_for('view_assets') }}"
+                       class="secondary-button">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="primary-button">
+
+                        Save Changes
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

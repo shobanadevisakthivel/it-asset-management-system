@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | IT Asset Management</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="dashboard-page">
+
+
+<div class="app-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-brand">
+
+            <div class="brand-icon">
+                IT
+            </div>
+
+            <div>
+
+                <h2>IT Asset</h2>
+
+                <span>Management</span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <a href="{{ url_for('dashboard') }}"
+               class="nav-item active">
+
+                <span>▦</span>
+
+                Dashboard
+
+            </a>
+
+
+
+            <a href="{{ url_for('add_asset') }}"
+               class="nav-item">
+
+                <span>＋</span>
+
+                Add Asset
+
+            </a>
+
+
+
+            <a href="{{ url_for('view_assets') }}"
+               class="nav-item">
+
+                <span>▤</span>
+
+                View Assets
+
+            </a>
+
+
+
+            <a href="{{ url_for('import_excel') }}"
+               class="nav-item">
+
+                <span>⇧</span>
+
+                Import Assets
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="security-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        System Online
+                    </strong>
+
+                    <small>
+                        Database Connected
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <a href="{{ url_for('logout') }}"
+               class="logout-button">
+
+                ⇥
+
+                Sign Out
+
+            </a>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="top-header">
+
+
+            <div>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    IT Asset Management Overview
+                </p>
+
+            </div>
+
+
+
+            <div class="user-area">
+
+
+                <div class="user-avatar">
+
+                    {{ session.get('username', 'A')[0]|upper }}
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        {{ session.get('username', 'Admin')|capitalize }}
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- QUICK ACTION -->
+
+        <section class="welcome-section">
+
+
+            <div>
+
+                <h2>
+                    Asset Overview
+                </h2>
+
+                <p>
+                    Monitor and manage company IT assets from one place.
+                </p>
+
+            </div>
+
+
+
+            <div class="dashboard-actions">
+
+
+                <a href="{{ url_for('add_asset') }}"
+                   class="primary-button">
+
+                    + Add New Asset
+
+                </a>
+
+
+
+                <a href="{{ url_for('import_excel') }}"
+                   class="secondary-button">
+
+                    ⇧ Import Excel
+
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- STAT CARDS -->
+
+        <section class="stats-grid">
+
+
+            <!-- TOTAL -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon blue">
+
+                    ▦
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Total Assets
+                    </span>
+
+                    <strong>
+                        {{ total }}
+                    </strong>
+
+                    <small>
+                        Registered assets
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DESKTOPS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon purple">
+
+                    ▣
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Desktop Systems
+                    </span>
+
+                    <strong>
+                        {{ desktops }}
+                    </strong>
+
+                    <small>
+                        Desktop computers
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- LAPTOPS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon green">
+
+                    ▰
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Laptop Systems
+                    </span>
+
+                    <strong>
+                        {{ laptops }}
+                    </strong>
+
+                    <small>
+                        Portable computers
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- RECENT ASSETS -->
+
+        <section class="content-card">
+
+
+            <div class="card-header">
+
+
+                <div>
+
+                    <h2>
+                        Recent Assets
+                    </h2>
+
+                    <p>
+                        Latest assets added to the system
+                    </p>
+
+                </div>
+
+
+
+                <a href="{{ url_for('view_assets') }}"
+                   class="view-all">
+
+                    View All →
+
+                </a>
+
+
+            </div>
+
+
+
+            {% if recent %}
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+
+                        <tr>
+
+                            <th>
+                                S.No
+                            </th>
+
+                            <th>
+                                System No
+                            </th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Processor
+                            </th>
+
+                            <th>
+                                RAM
+                            </th>
+
+                            <th>
+                                Model No
+                            </th>
+
+                        </tr>
+
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                        {% for asset in recent %}
+
+
+                        <tr>
+
+
+                            <td>
+                                {{ asset.ID }}
+                            </td>
+
+
+                            <td>
+
+                                <strong>
+                                    {{ asset.SystemNo }}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+                                {{ asset.Name }}
+                            </td>
+
+
+                            <td>
+
+                                <span class="asset-type">
+
+                                    {{ asset.Type or '-' }}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                {{ asset.Processor or '-' }}
+                            </td>
+
+
+                            <td>
+                                {{ asset.RAM or '-' }}
+                            </td>
+
+
+                            <td>
+                                {{ asset.ModelNo or '-' }}
+                            </td>
+
+
+                        </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+            {% else %}
+
+
+            <!-- EMPTY STATE -->
+
+            <div class="empty-state">
+
+
+                <div class="empty-icon">
+                    ▤
+                </div>
+
+
+                <h3>
+                    No assets available
+                </h3>
+
+
+                <p>
+                    Start by adding your first company IT asset.
+                </p>
+
+
+                <div class="dashboard-actions">
+
+
+                    <a href="{{ url_for('add_asset') }}"
+                       class="primary-button">
+
+                        + Add First Asset
+
+                    </a>
+
+
+                    <a href="{{ url_for('import_excel') }}"
+                       class="secondary-button">
+
+                        ⇧ Import Excel
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endif %}
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Asset | IT Asset Management</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="add-asset-page">
+
+<div class="add-asset-container">
+
+    <!-- HEADER -->
+    <header class="add-asset-header">
+
+        <div>
+            <h1>Enter Asset Data</h1>
+            <p>Add a new IT asset to the company asset database.</p>
+        </div>
+
+        <div class="add-header-actions">
+
+            <a href="{{ url_for('dashboard') }}" class="header-button">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('view_assets') }}" class="header-button">
+                View Data
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+    <main class="add-asset-content">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
+        <!-- FORM CARD -->
+        <div class="form-card">
+
+            <div class="form-card-header">
+
+                <div>
+                    <h2>Asset Information</h2>
+                    <p>Enter the hardware details below.</p>
+                </div>
+
+                <span class="required-note">
+                    * Required fields
+                </span>
+
+            </div>
+
+
+            <form method="POST">
+
+                <div class="form-grid">
+
+                    <!-- SYSTEM NO -->
+                    <div class="input-group">
+
+                        <label>
+                            System No <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="system_no"
+                            placeholder="Enter system number"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- NAME -->
+                    <div class="input-group">
+
+                        <label>
+                            Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter employee / user name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- MONITOR SERIAL -->
+                    <div class="input-group">
+
+                        <label>
+                            Monitor Serial No
+                        </label>
+
+                        <input
+                            type="text"
+                            name="monitor_serial_no"
+                            placeholder="Enter monitor serial number"
+                        >
+
+                    </div>
+
+
+                    <!-- TYPE -->
+                    <div class="input-group">
+
+                        <label>
+                            Type
+                        </label>
+
+                        <select name="type">
+
+                            <option value="">
+                                Select asset type
+                            </option>
+
+                            <option value="Desktop">
+                                Desktop
+                            </option>
+
+                            <option value="Laptop">
+                                Laptop
+                            </option>
+
+                            <option value="Workstation">
+                                Workstation
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- PROCESSOR -->
+                    <div class="input-group">
+
+                        <label>
+                            Processor
+                        </label>
+
+                        <input
+                            type="text"
+                            name="processor"
+                            placeholder="e.g. Intel Core i5"
+                        >
+
+                    </div>
+
+
+                    <!-- RAM -->
+                    <div class="input-group">
+
+                        <label>
+                            RAM
+                        </label>
+
+                        <input
+                            type="text"
+                            name="ram"
+                            placeholder="e.g. 8 GB"
+                        >
+
+                    </div>
+
+
+                    <!-- HARD DISK -->
+                    <div class="input-group">
+
+                        <label>
+                            Hard Disk
+                        </label>
+
+                        <input
+                            type="text"
+                            name="hard_disk"
+                            placeholder="e.g. 512 GB SSD"
+                        >
+
+                    </div>
+
+
+                    <!-- MODEL -->
+                    <div class="input-group">
+
+                        <label>
+                            Model No
+                        </label>
+
+                        <input
+                            type="text"
+                            name="model_no"
+                            placeholder="Enter model number"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+                <div class="form-actions">
+
+                    <a href="{{ url_for('dashboard') }}"
+                       class="secondary-button">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            class="primary-button">
+                        Save Asset
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Import Assets</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="add-asset-page">
+
+
+<div class="add-asset-container">
+
+
+    <header class="add-asset-header">
+
+        <div>
+
+            <h1>Import Assets</h1>
+
+            <p>
+                Upload an Excel file to automatically add asset records.
+            </p>
+
+        </div>
+
+
+        <div class="add-header-actions">
+
+            <a href="{{ url_for('dashboard') }}"
+               class="header-button">
+
+                Dashboard
+
+            </a>
+
+
+            <a href="{{ url_for('view_assets') }}"
+               class="header-button">
+
+                View Data
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <main class="add-asset-content">
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="alert {{ category }}">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <div class="form-card">
+
+
+            <div class="form-card-header">
+
+                <div>
+
+                    <h2>Excel Import</h2>
+
+                    <p>
+                        The system will automatically recognize
+                        common asset column names.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+
+                <div class="input-group">
+
+                    <label>
+                        Select Excel File
+                    </label>
+
+                    <input
+                        type="file"
+                        name="file"
+                        accept=".xlsx,.xls"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="import-info">
+
+                    <h3>
+                        Automatic Column Recognition
+                    </h3>
+
+                    <p>
+                        The system can recognize columns such as
+                        System No, Asset ID, Employee Name,
+                        Monitor Serial No, Device Type, CPU,
+                        RAM, Storage and Model No.
+                    </p>
+
+                </div>
+
+
+
+                <div class="form-actions">
+
+                    <a href="{{ url_for('view_assets') }}"
+                       class="secondary-button">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="primary-button">
+
+                        Import Excel
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>
